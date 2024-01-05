@@ -67,10 +67,6 @@ foreach $infile (@ARGV) {
     push @csv, \@csv_line;
 }
 
-#print Dumper @csv;
-#exit 1;
-
-print "out='$opt_output'\n";
 if (!$opt_output || $opt_output =~ /\.csv$/) {
     #output csv
     if ($opt_output) {
