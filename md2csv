@@ -73,15 +73,14 @@ if (!$opt_output || $opt_output =~ /\.csv$/) {
         open OUT, '>:crlf:encoding(CP932)', $opt_output || die "Can't open to $opt_output";
     } else {
         open OUT, '>-:encoding(UTF-8)' || die "Can't open to stdout ";
+        binmode OUT, ":utf8";
     }
     my $first = 1;
     foreach my $h (@csv_header) {
         if ($first) {
-            (! $opt_output) && ($h = encode_utf8($h));
             print OUT "# $h";
             $first = 0;
         } else {
-            (! $opt_output) && ($h = encode_utf8($h));
             print OUT ", $h";
         }
     }
@@ -91,14 +90,11 @@ if (!$opt_output || $opt_output =~ /\.csv$/) {
         my @line = @{$l};
         my $first = 1;
         foreach my $cell (@line) {
-            # $cell = encode("shiftjis", $cell);
             $cell =~ s/\n/<BR>/;
             if ($first) {
-                (! $opt_output) && ($cell = encode_utf8($cell));
                 print OUT "\"$cell\"";
                 $first = 0;
             } else {
-                (! $opt_output) && ($cell = encode_utf8($cell));
                 print OUT ", \"$cell\"";
             }
         }
